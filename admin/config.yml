@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: kuiradyan-tech/radyan-platform
+  name: git-gateway
   branch: main
 
 # Medya dosyaları
