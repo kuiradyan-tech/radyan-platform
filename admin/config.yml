@@ -1,0 +1,119 @@
+backend:
+  name: github
+  repo: kuiradyan-tech/radyan-platform
+  branch: main
+
+# Medya dosyaları
+media_folder: "static/uploads"
+public_folder: "/uploads"
+
+collections:
+
+  # ── HABERLER ──────────────────────────────────────────
+  - name: "haberler"
+    label: "Haberler"
+    folder: "content/haberler"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Başlık",       name: "title",   widget: "string" }
+      - { label: "Yayın Tarihi", name: "date",    widget: "datetime" }
+      - { label: "Özet",         name: "excerpt", widget: "text",   required: false }
+      - label: "Durum"
+        name: "draft"
+        widget: "boolean"
+        default: true
+        hint: "Açıksa taslak (yayınlanmaz), kapalıysa yayında"
+      - label: "Kapak Görseli"
+        name: "cover"
+        widget: "image"
+        required: false
+      - label: "Yazar Bilgisi"
+        name: "author"
+        widget: "string"
+        default: "Radyan Kolektifi"
+        hint: "Anonim kalmak istiyorsan 'Anonim' veya takma ad kullan"
+      - label: "Etiketler"
+        name: "tags"
+        widget: "list"
+        required: false
+      - label: "İçerik"
+        name: "body"
+        widget: "markdown"
+
+  # ── BELGELEME ─────────────────────────────────────────
+  - name: "belgeleme"
+    label: "Belgeleme & Raporlar"
+    folder: "content/belgeleme"
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    fields:
+      - { label: "Başlık",  name: "title",   widget: "string" }
+      - { label: "Tarih",   name: "date",    widget: "datetime" }
+      - { label: "Özet",    name: "excerpt", widget: "text" }
+      - label: "Kategori"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "İnsan Hakları İhlali",  value: "ihlal" }
+          - { label: "Polis/Devlet Şiddeti",  value: "devlet-siddeti" }
+          - { label: "LGBTİ+ Hakları",        value: "lgbti" }
+          - { label: "Kadın Hakları",         value: "kadin" }
+          - { label: "Basın Özgürlüğü",       value: "basin" }
+          - { label: "Diğer",                 value: "diger" }
+      - label: "Belge Dosyası (PDF)"
+        name: "document"
+        widget: "file"
+        required: false
+      - { label: "İçerik", name: "body", widget: "markdown" }
+
+  # ── KAYNAKLAR ─────────────────────────────────────────
+  - name: "kaynaklar"
+    label: "Kaynaklar & Rehberler"
+    folder: "content/kaynaklar"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Başlık",  name: "title",   widget: "string" }
+      - { label: "Özet",    name: "excerpt", widget: "text" }
+      - label: "Tür"
+        name: "type"
+        widget: "select"
+        options:
+          - { label: "Dijital Güvenlik",  value: "dijital-guvenlik" }
+          - { label: "Hukuki Haklar",     value: "hukuk" }
+          - { label: "Psikolojik Destek", value: "destek" }
+          - { label: "Örgütlenme",        value: "orgutlenme" }
+          - { label: "Diğer",             value: "diger" }
+      - label: "Güncelleme Tarihi"
+        name: "updated"
+        widget: "datetime"
+      - { label: "İçerik", name: "body", widget: "markdown" }
+
+  # ── ETKİNLİKLER ───────────────────────────────────────
+  - name: "etkinlikler"
+    label: "Etkinlikler"
+    folder: "content/etkinlikler"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Etkinlik Adı", name: "title",   widget: "string" }
+      - { label: "Tarih & Saat", name: "date",    widget: "datetime" }
+      - { label: "Açıklama",     name: "excerpt", widget: "text" }
+      - label: "Tür"
+        name: "eventtype"
+        widget: "select"
+        options:
+          - { label: "Çevrimiçi Atölye", value: "online" }
+          - { label: "Yüz Yüze",         value: "yuz-yuze" }
+          - { label: "Hibrit",           value: "hibrit" }
+      - label: "Konum / Link"
+        name: "location"
+        widget: "string"
+        required: false
+        hint: "Çevrimiçi ise Tor/Matrix linki, yüz yüze ise şehir adı"
+      - label: "Kayıt Linki"
+        name: "register_url"
+        widget: "string"
+        required: false
+      - { label: "Detaylar", name: "body", widget: "markdown" }
