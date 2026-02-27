@@ -1,0 +1,44 @@
+# netlify.toml
+# ─────────────────────────────────────────────────────────────
+# Kök Platform — Netlify Yapılandırması
+# ─────────────────────────────────────────────────────────────
+
+[build]
+  publish = "static"      # Hugo/Jekyll build klasörü; statik site ise "site" olarak değiştir
+  command = "echo 'Static site — no build step'"
+
+# Decap CMS için kimlik doğrulama
+[build.environment]
+  NODE_VERSION = "20"
+
+# ── GÜVENLİK BAŞLIKLARI ──────────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "no-referrer"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = """
+      default-src 'self';
+      script-src 'self' https://unpkg.com 'unsafe-inline';
+      style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+      font-src https://fonts.gstatic.com;
+      img-src 'self' data: blob:;
+      connect-src 'self';
+      frame-ancestors 'none';
+    """
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+
+# ── YÖNLENDİRMELER ───────────────────────────────────────────
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
+# 404 sayfası
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

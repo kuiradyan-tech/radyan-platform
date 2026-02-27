@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kök | Queer Feminist İnsan Hakları Platformu</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300;1,700&family=DM+Sans:wght@300;400;500&family=Caveat:wght@600&display=swap');
+:root {
+  --cream:#faf6f0; --lav:#c9b8e8; --lav-deep:#8b6bb1;
+  --rose:#f0a0b0; --peach:#f7c4a0; --sage:#a8c5a0;
+  --sky:#a8d4e8; --gold:#f5d080; --ink:#2a2035;
+  --muted:#7a6d8a; --border:#e0d4f0;
+  --rainbow:linear-gradient(90deg,#f9a8b8 0%,#f7c4a0 16%,#f5d080 33%,#a8c5a0 50%,#a8d4e8 66%,#c9b8e8 83%,#f0a0c8 100%);
+  --rainbow-v:linear-gradient(180deg,#f9a8b8 0%,#f7c4a0 20%,#f5d080 40%,#a8c5a0 55%,#a8d4e8 72%,#c9b8e8 88%,#f0a0c8 100%);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.75;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;mix-blend-mode:multiply}
+.blob{position:absolute;border-radius:60% 40% 70% 30%/50% 60% 40% 70%;filter:blur(65px);opacity:.3;pointer-events:none;animation:morph 14s ease-in-out infinite}
+@keyframes morph{0%,100%{border-radius:60% 40% 70% 30%/50% 60% 40% 70%}50%{border-radius:40% 60% 30% 70%/60% 40% 70% 50%}}
+.rainbow-stripe{height:3px;background:var(--rainbow)}
+header{position:sticky;top:0;z-index:100;background:rgba(250,246,240,.92);backdrop-filter:blur(18px);border-bottom:1.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:66px}
+.logo{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:900;color:var(--ink);text-decoration:none;letter-spacing:-1px;display:flex;align-items:center;gap:.5rem}
+.logo-arc{display:inline-block;width:22px;height:14px;position:relative}
+.logo-arc::before,.logo-arc::after{content:'';position:absolute;left:0;right:0;border-radius:50px 50px 0 0}
+.logo-arc::before{top:0;height:100%;border:2.5px solid var(--lav-deep);border-bottom:none}
+.logo-arc::after{top:5px;height:calc(100% - 5px);border:2px solid var(--rose);border-bottom:none;left:4px;right:4px}
+nav{display:flex;gap:2rem;align-items:center}
+nav a{font-size:.82rem;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s;position:relative}
+nav a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:2px;background:var(--rainbow);transform:scaleX(0);transition:transform .25s;border-radius:2px}
+nav a:hover{color:var(--ink)}
+nav a:hover::after{transform:scaleX(1)}
+.nav-cta{background:var(--lav-deep)!important;color:#fff!important;padding:.45rem 1.2rem;border-radius:100px;font-size:.8rem!important}
+.nav-cta::after{display:none!important}
+.hero{position:relative;min-height:90vh;display:flex;align-items:center;overflow:hidden;padding:6rem 2.5rem 4rem}
+.hero-inner{position:relative;z-index:2;max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:5rem}
+.hero-tag{display:inline-flex;align-items:center;gap:.5rem;font-family:'Caveat',cursive;font-size:1.15rem;color:var(--lav-deep);margin-bottom:1.5rem;opacity:0;animation:fadeUp .7s .2s forwards}
+.hero-tag::before{content:'';width:28px;height:3px;background:var(--rainbow);display:block;border-radius:2px}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(3.2rem,6vw,6.5rem);font-weight:900;line-height:1;letter-spacing:-3px;color:var(--ink);opacity:0;animation:fadeUp .7s .4s forwards}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--lav-deep)}
+.hero h1 .hl{position:relative;display:inline-block}
+.hero h1 .hl::after{content:'';position:absolute;bottom:2px;left:0;right:0;height:8px;background:var(--rainbow);z-index:-1;opacity:.45;border-radius:4px}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:480px;margin:2rem 0 3rem;line-height:1.85;opacity:0;animation:fadeUp .7s .6s forwards}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp .7s .8s forwards}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;font-size:.85rem;font-weight:500;text-decoration:none;cursor:pointer;border:none;border-radius:100px;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--lav-deep);color:#fff;box-shadow:0 4px 20px rgba(139,107,177,.35)}
+.btn-primary:hover{box-shadow:0 8px 32px rgba(139,107,177,.5)}
+.btn-secondary{background:transparent;color:var(--ink);border:1.5px solid var(--border)}
+.btn-secondary:hover{border-color:var(--lav-deep);color:var(--lav-deep)}
+.hero-access{background:#fff;border:1.5px solid var(--border);border-radius:24px;overflow:hidden;box-shadow:0 8px 40px rgba(42,32,53,.08);opacity:0;animation:fadeIn .8s 1s forwards}
+.card-rainbow-top{height:4px;background:var(--rainbow)}
+.access-inner{padding:2rem 2rem 2.2rem}
+.access-title{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:700;margin-bottom:1.3rem;display:flex;align-items:center;gap:.5rem}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#5c5;animation:pulse 2s infinite}
+.access-list{list-style:none;display:flex;flex-direction:column;gap:.65rem}
+.access-item{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1rem;border:1.5px solid var(--border);border-radius:12px;font-size:.82rem;transition:border-color .2s,background .2s;text-decoration:none;color:var(--ink)}
+.access-item:hover{border-color:var(--lav);background:#faf4ff}
+.access-item-left{display:flex;align-items:center;gap:.6rem}
+.access-name{font-weight:500;font-size:.83rem;display:block}
+.access-desc{font-size:.72rem;color:var(--muted);display:block}
+.access-badge{font-size:.63rem;font-weight:600;padding:.2rem .55rem;border-radius:100px}
+.badge-ok{background:#e8f5e9;color:#2e7d32}
+.badge-tor{background:#f3e5f5;color:#7b1fa2}
+.badge-mirror{background:#fff8e1;color:#e65100}
+.wave{width:100%;overflow:hidden;line-height:0}
+.wave svg{display:block;width:100%}
+.section{padding:7rem 2.5rem;max-width:1200px;margin:0 auto}
+.section-tag{font-family:'Caveat',cursive;font-size:1.05rem;color:var(--lav-deep);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.section-tag::before{content:'';display:inline-block;width:22px;height:3px;background:var(--rainbow);border-radius:2px}
+.section-title{font-family:'Fraunces',serif;font-size:clamp(2.2rem,4vw,3.8rem);font-weight:900;line-height:1.05;letter-spacing:-1.5px;margin-bottom:1rem}
+.features-bg{background:linear-gradient(160deg,#f5eeff 0%,#fff0f5 100%)}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:4rem}
+.feature-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:2rem 2rem 2.5rem;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s}
+.feature-card::before{content:'';position:absolute;left:0;top:16px;bottom:16px;width:3px;background:var(--rainbow-v);border-radius:0 2px 2px 0;opacity:0;transition:opacity .25s}
+.feature-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(139,107,177,.12)}
+.feature-card:hover::before{opacity:1}
+.feature-emoji{font-size:2rem;margin-bottom:1rem;display:block}
+.feature-name{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:700;margin-bottom:.6rem}
+.feature-text{font-size:.9rem;color:var(--muted);line-height:1.75}
+.content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;margin-top:3rem}
+.content-card{background:#fff;border:1.5px solid var(--border);border-radius:20px;overflow:hidden;transition:transform .25s,box-shadow .25s;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.content-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(42,32,53,.1)}
+.bar-haber{height:5px;background:linear-gradient(90deg,#c9b8e8,#8b6bb1)}
+.bar-belge{height:5px;background:linear-gradient(90deg,#f0a0b0,#c0406a)}
+.bar-kaynak{height:5px;background:linear-gradient(90deg,#a8c5a0,#4a8a40)}
+.bar-etkinlik{height:5px;background:linear-gradient(90deg,#f5d080,#d08020)}
+.card-body{padding:1.5rem 1.8rem 2rem;flex:1}
+.card-meta{font-size:.72rem;font-weight:500;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem}
+.card-title{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:700;line-height:1.3;margin-bottom:.8rem}
+.card-excerpt{font-size:.88rem;color:var(--muted);line-height:1.7}
+.card-footer{padding:1rem 1.8rem;border-top:1.5px solid var(--border);font-size:.78rem;color:var(--lav-deep);font-weight:500;display:flex;align-items:center;gap:.4rem}
+.card-footer::after{content:'→'}
+.tabs{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem}
+.tab{padding:.5rem 1.2rem;border-radius:100px;font-size:.82rem;font-weight:500;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;transition:all .2s}
+.tab:hover,.tab.active{background:var(--lav-deep);color:#fff;border-color:var(--lav-deep)}
+.access-guide-bg{background:var(--ink);padding:7rem 2.5rem}
+.access-guide-inner{max-width:1200px;margin:0 auto}
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:4rem}
+.guide-card{border:1.5px solid #3a2f4a;border-radius:20px;overflow:hidden;transition:border-color .25s,background .25s}
+.guide-card:hover{background:#2f2540;border-color:#6a5080}
+.guide-top{height:4px}
+.gt-1{background:linear-gradient(90deg,#f9a8b8,#f0a0c8)}
+.gt-2{background:linear-gradient(90deg,#f7c4a0,#f5d080)}
+.gt-3{background:linear-gradient(90deg,#a8c5a0,#a8d4e8)}
+.gt-4{background:linear-gradient(90deg,#c9b8e8,#a8d4e8)}
+.guide-body{padding:1.8rem 1.8rem 1.5rem}
+.guide-step{font-family:'Caveat',cursive;font-size:.95rem;color:var(--peach);margin-bottom:.5rem}
+.guide-title{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:#faf6f0;margin-bottom:.8rem}
+.guide-text{font-size:.87rem;color:rgba(250,246,240,.55);line-height:1.7}
+.guide-links{padding:1.2rem 1.8rem;display:flex;flex-direction:column;gap:.5rem}
+.guide-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--lav);text-decoration:none;transition:color .2s,gap .2s}
+.guide-link:hover{color:#fff;gap:.7rem}
+.guide-link::before{content:'↗';font-size:.7rem}
+.about-layout{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+.about-text{font-size:1rem;color:var(--muted)}
+.about-text p+p{margin-top:1.2rem}
+.values-list{list-style:none;margin-top:2.5rem;display:flex;flex-direction:column;gap:1rem}
+.value-item{display:flex;align-items:flex-start;gap:1rem;padding:1.2rem 1.5rem;background:#fff;border:1.5px solid var(--border);border-radius:16px;transition:border-color .2s}
+.value-item:hover{border-color:var(--lav)}
+.value-marker{min-width:32px;height:32px;border-radius:50%;background:var(--rainbow);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.value-content strong{display:block;font-weight:600;font-size:.9rem;margin-bottom:.2rem}
+.value-content span{font-size:.83rem;color:var(--muted)}
+.join-section{background:linear-gradient(135deg,#f0ebff 0%,#fff0f5 50%,#fff8f0 100%);padding:7rem 2.5rem}
+.join-inner{max-width:1200px;margin:0 auto}
+.join-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:4rem}
+.join-card{background:#fff;border-radius:20px;border:1.5px solid var(--border);padding:2.5rem 2rem;overflow:hidden;position:relative;display:flex;flex-direction:column;gap:1rem;transition:transform .25s,box-shadow .25s}
+.join-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(42,32,53,.1)}
+.join-card::after{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:var(--rainbow);opacity:.12;transition:opacity .25s,transform .25s}
+.join-card:hover::after{opacity:.28;transform:scale(1.2)}
+.join-icon{font-size:2.2rem}
+.join-title{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700}
+.join-text{font-size:.88rem;color:var(--muted);line-height:1.7;flex:1}
+.join-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:500;color:var(--lav-deep);text-decoration:none;transition:gap .2s}
+.join-link:hover{gap:.7rem}
+.join-link::after{content:'→'}
+footer{background:var(--ink);color:rgba(250,246,240,.6);padding:4rem 2.5rem 2.5rem}
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:4rem;padding:3rem 0;border-bottom:1px solid #3a2f4a}
+.footer-brand .logo{color:#faf6f0;margin-bottom:1rem}
+.footer-brand p{font-size:.85rem;line-height:1.7;max-width:280px}
+.footer-col h4{font-family:'Fraunces',serif;font-size:.9rem;font-weight:700;color:#faf6f0;margin-bottom:1rem}
+.footer-col a{display:block;font-size:.82rem;color:rgba(250,246,240,.45);text-decoration:none;margin-bottom:.6rem;transition:color .2s}
+.footer-col a:hover{color:var(--lav)}
+.footer-bottom{max-width:1200px;margin:2rem auto 0;display:flex;justify-content:space-between;align-items:center;font-size:.75rem;flex-wrap:wrap;gap:1rem}
+.footer-bottom a{color:rgba(250,246,240,.35);text-decoration:none;transition:color .2s}
+.footer-bottom a:hover{color:var(--lav)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+@media(max-width:900px){.hero-inner,.about-layout,.footer-inner{grid-template-columns:1fr;gap:3rem}}
+@media(max-width:600px){header,.section,.hero,.access-guide-bg,.join-section{padding-left:1.2rem;padding-right:1.2rem}nav a:not(.nav-cta){display:none}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="#"><span class="logo-arc"></span> kök</a>
+  <nav>
+    <a href="#icerik">İçerik</a>
+    <a href="#hakkinda">Hakkında</a>
+    <a href="#erisim-rehber">Güvenle Eriş</a>
+    <a href="#katil" class="nav-cta btn">Katıl</a>
+  </nav>
+</header>
+<div class="rainbow-stripe"></div>
+
+<section class="hero">
+  <div class="blob" style="width:700px;height:600px;background:var(--lav);top:-150px;right:-200px;"></div>
+  <div class="blob" style="width:450px;height:450px;background:var(--peach);bottom:-100px;left:-120px;animation-delay:-5s;"></div>
+  <div class="blob" style="width:300px;height:300px;background:var(--rose);top:40%;left:42%;animation-delay:-9s;opacity:.18;"></div>
+  <div class="hero-inner">
+    <div>
+      <p class="hero-tag">queer feminist insan hakları platformu</p>
+      <h1>Direniş<br><em>köklerde</em><br><span class="hl">büyür.</span></h1>
+      <p class="hero-sub">Sansür, baskı ve susturma politikalarına karşı; queer ve feminist perspektiften insan hakları haberciliği, belgeleme ve dayanışma.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#icerik">İçerikleri Keşfet</a>
+        <a class="btn btn-secondary" href="#erisim-rehber">Güvenli Eriş</a>
+      </div>
+    </div>
+    <div class="hero-access">
+      <div class="card-rainbow-top"></div>
+      <div class="access-inner">
+        <p class="access-title"><span class="live-dot"></span> Erişim Noktaları</p>
+        <ul class="access-list">
+          <li><a class="access-item" href="#"><span class="access-item-left"><span>🌐</span><span><span class="access-name">kok.press</span><span class="access-desc">Ana domain — HTTPS</span></span></span><span class="access-badge badge-ok">Aktif</span></a></li>
+          <li><a class="access-item" href="#"><span class="access-item-left"><span>🧅</span><span><span class="access-name">kok…onion</span><span class="access-desc">Tor Gizli Servisi</span></span></span><span class="access-badge badge-tor">Tor</span></a></li>
+          <li><a class="access-item" href="#"><span class="access-item-left"><span>📦</span><span><span class="access-name">IPFS Gateway</span><span class="access-desc">Merkezi olmayan depo</span></span></span><span class="access-badge badge-ok">Aktif</span></a></li>
+          <li><a class="access-item" href="#"><span class="access-item-left"><span>🪞</span><span><span class="access-name">mirror.kok.press</span><span class="access-desc">Yedek — İzlanda / İsviçre</span></span></span><span class="access-badge badge-mirror">Mirror</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wave"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#f5eeff"/></svg></div>
+
+<div class="features-bg">
+  <div class="section">
+    <p class="section-tag">Neden Kök?</p>
+    <h2 class="section-title">Kökler kesilince<br>yeni sürgünler çıkar.</h2>
+    <div class="features-grid">
+      <div class="feature-card"><span class="feature-emoji">🌿</span><p class="feature-name">Queer Feminist Perspektif</p><p class="feature-text">Haberleri yalnızca aktarmakla kalmıyor; kesişimsel feminist bir bakışla analiz ediyoruz. Cinsiyet, kimlik ve beden politikaları merkezde.</p></div>
+      <div class="feature-card"><span class="feature-emoji">🔒</span><p class="feature-name">Güvenli &amp; Anonim Okuma</p><p class="feature-text">Tor, IPFS ve çoklu mirror altyapısıyla sansür duvarlarını aşıyoruz. Okurlarımızın kimliği ve güvenliği her şeyin önünde.</p></div>
+      <div class="feature-card"><span class="feature-emoji">📢</span><p class="feature-name">Belgeleme &amp; Hafıza</p><p class="feature-text">İnsan hakları ihlallerini sistematik biçimde belgeliyor, arşivliyor ve unutturmuyoruz. Dijital hafıza sansürlenemez.</p></div>
+      <div class="feature-card"><span class="feature-emoji">🤝</span><p class="feature-name">Dayanışma Ağı</p><p class="feature-text">Yerel ve uluslararası aktivist ağlarla bağlantı kuruyoruz. Birbirimizi bulmak, görmek ve güçlendirmek için buradayız.</p></div>
+      <div class="feature-card"><span class="feature-emoji">✍️</span><p class="feature-name">Açık Katkı</p><p class="feature-text">Kimliğini koruyarak yazı gönderebilir, belge paylaşabilir ya da çeviri yapabilirsin. Platform herkese açık, hiyerarşisiz.</p></div>
+      <div class="feature-card"><span class="feature-emoji">🌍</span><p class="feature-name">Sansüre Dirençli</p><p class="feature-text">Tek bir sunucu kapatılamaz. Farklı ağlar ve domain'ler üzerinden erişim her zaman mümkün — bağlantı kesintisiz.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="wave" style="background:#f5eeff;"><svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,30 C360,0 1080,60 1440,30 L1440,60 L0,60 Z" fill="#faf6f0"/></svg></div>
+
+<div class="section" id="icerik">
+  <p class="section-tag">İçerikler</p>
+  <h2 class="section-title">Sesler &amp; Belgeler</h2>
+  <div class="tabs">
+    <button class="tab active" onclick="filterTab(this,'hepsi')">Tümü</button>
+    <button class="tab" onclick="filterTab(this,'haber')">Haberler</button>
+    <button class="tab" onclick="filterTab(this,'belge')">Belgeleme</button>
+    <button class="tab" onclick="filterTab(this,'kaynak')">Kaynaklar</button>
+    <button class="tab" onclick="filterTab(this,'etkinlik')">Etkinlikler</button>
+  </div>
+  <div class="content-grid">
+    <a class="content-card" href="#" data-cat="haber"><div class="bar-haber"></div><div class="card-body"><p class="card-meta">📰 Haber · 15 Ocak 2025</p><h3 class="card-title">İstanbul'da LGBTİ+ Yürüyüşüne Yönelik Polis Müdahalesi Belgelendi</h3><p class="card-excerpt">Onur Yürüyüşü girişimine müdahalenin ayrıntıları, gözaltı tutanakları ve tanık ifadelerine dayalı kapsamlı rapor.</p></div><div class="card-footer">Devamını oku</div></a>
+    <a class="content-card" href="#" data-cat="belge"><div class="bar-belge"></div><div class="card-body"><p class="card-meta">📋 Belgeleme · 8 Ocak 2025</p><h3 class="card-title">2024 Yılı Trans Hak İhlalleri Raporu</h3><p class="card-excerpt">Geçen yıl boyunca toplanan vaka kayıtları, tanıklıklar ve hukuki belgeler ışığında kapsamlı bir değerlendirme.</p></div><div class="card-footer">Raporu İncele</div></a>
+    <a class="content-card" href="#" data-cat="kaynak"><div class="bar-kaynak"></div><div class="card-body"><p class="card-meta">📚 Kaynak · Güncel</p><h3 class="card-title">Dijital Güvenlik Rehberi: Aktivistler İçin</h3><p class="card-excerpt">VPN, Tor, Signal ve güvenli iletişim araçlarının nasıl kullanılacağına dair adım adım kılavuz.</p></div><div class="card-footer">Rehberi Oku</div></a>
+    <a class="content-card" href="#" data-cat="etkinlik"><div class="bar-etkinlik"></div><div class="card-body"><p class="card-meta">📅 Etkinlik · 1 Şubat 2025</p><h3 class="card-title">Çevrimiçi Atölye: Sansüre Direnen Arşivleme</h3><p class="card-excerpt">IPFS ve Wayback Machine araçlarıyla belgelerin nasıl kalıcı olarak arşivleneceğine dair ücretsiz atölye.</p></div><div class="card-footer">Kaydol</div></a>
+    <a class="content-card" href="#" data-cat="haber"><div class="bar-haber"></div><div class="card-body"><p class="card-meta">📰 Haber · 28 Aralık 2024</p><h3 class="card-title">Baskıya Rağmen Büyüyen Feminist Dayanışma Ağları</h3><p class="card-excerpt">Farklı ülkelerden feminist grupların sansüre karşı geliştirdiği dijital ve yerelde direniş stratejileri.</p></div><div class="card-footer">Devamını oku</div></a>
+    <a class="content-card" href="#" data-cat="kaynak"><div class="bar-kaynak"></div><div class="card-body"><p class="card-meta">📚 Kaynak · Güncel</p><h3 class="card-title">Hukuki Haklar El Kitabı: Gözaltında Ne Yapmalı?</h3><p class="card-excerpt">Gözaltı, sorgulama ve baskı durumlarında yasal haklarınızı bilmenize yardımcı olacak pratik kılavuz.</p></div><div class="card-footer">Rehberi Oku</div></a>
+  </div>
+</div>
+
+<div class="access-guide-bg" id="erisim-rehber">
+  <div class="access-guide-inner">
+    <p class="section-tag" style="color:var(--peach)">Güvenle Eriş</p>
+    <h2 class="section-title" style="color:#faf6f0">Bu siteye her yerden,<br>güvenle ulaşabilirsin.</h2>
+    <div class="guide-grid">
+      <div class="guide-card"><div class="guide-top gt-1"></div><div class="guide-body"><p class="guide-step">En basit yol</p><p class="guide-title">Normal tarayıcın ile</p><p class="guide-text">kok.press adresine gir. Engellenmemişse en hızlı yöntem bu. Sayfa açılmıyorsa aşağıdaki alternatifleri dene.</p></div><div class="guide-links"><a class="guide-link" href="#">kok.press'e git</a><a class="guide-link" href="#">mirror.kok.press (yedek)</a></div></div>
+      <div class="guide-card"><div class="guide-top gt-2"></div><div class="guide-body"><p class="guide-step">Site engellendiyse</p><p class="guide-title">Tor Browser ile</p><p class="guide-text">Tor Browser'ı ücretsiz indir, kur, aç. Sonra .onion adresimizi yaz. Kimliğin gizli, trafik şifreli — hiçbir engel geçemez.</p></div><div class="guide-links"><a class="guide-link" href="https://www.torproject.org" target="_blank" rel="noopener">Tor Browser İndir</a><a class="guide-link" href="#">.onion Adresimiz</a></div></div>
+      <div class="guide-card"><div class="guide-top gt-3"></div><div class="guide-body"><p class="guide-step">Her iki yol da kapandıysa</p><p class="guide-title">IPFS üzerinden</p><p class="guide-text">İçeriklerimiz binlerce bilgisayarda dağıtık olarak saklanıyor. Brave tarayıcı IPFS'i yerleşik destekler.</p></div><div class="guide-links"><a class="guide-link" href="https://brave.com" target="_blank" rel="noopener">Brave Tarayıcı</a><a class="guide-link" href="#">IPFS Adresi</a></div></div>
+      <div class="guide-card"><div class="guide-top gt-4"></div><div class="guide-body"><p class="guide-step">Güncelleme almak için</p><p class="guide-title">RSS &amp; Nostr takibi</p><p class="guide-text">Algoritmaya muhtaç olmadan takip et. RSS okuyucuna ekle ya da Nostr hesabımızı takip et — sansürsüz, doğrudan.</p></div><div class="guide-links"><a class="guide-link" href="#">RSS Beslemesi</a><a class="guide-link" href="#">Nostr Adresimiz</a></div></div>
+    </div>
+  </div>
+</div>
+
+<div style="background:linear-gradient(170deg,#fff8f0 0%,#f5eeff 100%);padding:7rem 2.5rem;" id="hakkinda">
+  <div class="about-layout" style="max-width:1200px;margin:0 auto;">
+    <div>
+      <p class="section-tag">Biz Kimiz?</p>
+      <h2 class="section-title">Anonim,<br>bağımsız,<br>birlikte.</h2>
+      <div class="about-text">
+        <p>Kök; gazeteciler, aktivistler, araştırmacılar ve dayanışma içinde olmak isteyen herkesten oluşan merkezi olmayan bir kolektif.</p>
+        <p>Queer ve feminist perspektif bizim için siyasi bir duruş değil, varoluşsal bir zorunluluk. Baskı altındaki bedenlerin ve kimliklerin sesini yükseltmek bu platformun kuruluş sebebi.</p>
+        <p>Kimse bizim "üstümüzde" değil. Hiçbir devlet, şirket ya da fon bizi yönlendirmiyor. Sadece okuyucularımızın desteğiyle ayaktayız.</p>
+      </div>
+    </div>
+    <ul class="values-list">
+      <li class="value-item"><span class="value-marker">♀</span><span class="value-content"><strong>Kesişimsellik</strong><span>Cinsiyet, kimlik, sınıf ve etnisiteyi birlikte görüyoruz.</span></span></li>
+      <li class="value-item"><span class="value-marker">🔓</span><span class="value-content"><strong>Şeffaflık</strong><span>Kaynak kodumuzu, finansmanımızı ve kararlarımızı açıklıyoruz.</span></span></li>
+      <li class="value-item"><span class="value-marker">🤲</span><span class="value-content"><strong>Yatay Örgütlenme</strong><span>Hiyerarşisiz, kolektif karar alma ilkesiyle çalışıyoruz.</span></span></li>
+      <li class="value-item"><span class="value-marker">🛡</span><span class="value-content"><strong>Kaynak Koruması</strong><span>Haber kaynaklarımızı ve katkıcılarımızı korumak önceliğimiz.</span></span></li>
+      <li class="value-item"><span class="value-marker">🌱</span><span class="value-content"><strong>Uzun Soluklu Direniş</strong><span>Ani değil, kök salan; sürdürülebilir bir mücadele anlayışı.</span></span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="join-section" id="katil">
+  <div class="join-inner">
+    <p class="section-tag">Nasıl Destek Olursun?</p>
+    <h2 class="section-title">Her katkı<br>bir kök daha.</h2>
+    <div class="join-grid">
+      <div class="join-card"><span class="join-icon">✍️</span><p class="join-title">Yaz &amp; Belgele</p><p class="join-text">Araştırmacı gazetecilik, tanıklık veya analiz yazısı gönder. Kimliğini güvenle koruyarak yayınlayabilirsin.</p><a class="join-link" href="#">Yazı Gönder</a></div>
+      <div class="join-card"><span class="join-icon">📡</span><p class="join-title">Mirror Çalıştır</p><p class="join-text">Bir sunucun varsa mirror'lamaya katkıda bulun. Ağ ne kadar büyük olursa o kadar güçlü.</p><a class="join-link" href="#">Rehberi Gör</a></div>
+      <div class="join-card"><span class="join-icon">💜</span><p class="join-title">Bağış Yap</p><p class="join-text">Monero veya Bitcoin ile anonim bağış yapabilirsin. Her katkı doğrudan altyapı giderlerini karşılar.</p><a class="join-link" href="#">Bağış Yap</a></div>
+      <div class="join-card"><span class="join-icon">🌐</span><p class="join-title">Çevir &amp; Yay</p><p class="join-text">İçerikleri başka dillere çevirerek daha geniş kitlelere ulaştır. Koordinasyon Matrix kanalında.</p><a class="join-link" href="#">Çevirmene Katıl</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="rainbow-stripe"></div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><a class="logo" href="#"><span class="logo-arc"></span> kök</a><p>Queer feminist insan hakları platformu. Sansüre ve susturmaya karşı, birlikte ve köklü.</p></div>
+    <div class="footer-col"><h4>Platform</h4><a href="#">Haberler</a><a href="#">Belgeleme</a><a href="#">Kaynaklar</a><a href="#">Etkinlikler</a><a href="#">Arşiv</a></div>
+    <div class="footer-col"><h4>Bağlantılar</h4><a href="#">Güvenli İletişim</a><a href="#">PGP Anahtarı</a><a href="#">Kaynak Kodu</a><a href="#">Gizlilik Politikası</a><a href="#">Erişilebilirlik</a></div>
+  </div>
+  <div class="footer-bottom"><span>© 2025 Kök Kolektifi — CC0 lisansı ile kamuya açık</span><div style="display:flex;gap:1.5rem;"><a href="#">matrix</a><a href="#">nostr</a><a href="#">tor</a><a href="#">ipfs</a></div></div>
+</footer>
+<script>
+function filterTab(el,cat){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.querySelectorAll('.content-card').forEach(card=>{card.style.display=(cat==='hepsi'||card.dataset.cat===cat)?'flex':'none'});}
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}})},{threshold:.08});
+document.querySelectorAll('.feature-card,.content-card,.value-item,.guide-card,.join-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(16px)';el.style.transition='opacity .5s ease,transform .5s ease';obs.observe(el);});
+</script>
+</body>
+</html>

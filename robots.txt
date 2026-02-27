@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /admin/teknik.html
+
+# IPFS ve Tor gateway'leri için de geçerli
+Allow: /
