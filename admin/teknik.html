@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teknik Altyapı | Kök Admin</title>
+<!-- Bu sayfa yalnızca yetkili yöneticiler içindir -->
+<!-- robots.txt'e ekle: Disallow: /admin/ -->
+<meta name="robots" content="noindex, nofollow">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@700;900&family=IBM+Plex+Mono:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --ink:      #2a2035;
+  --cream:    #faf6f0;
+  --bg:       #0f0c14;
+  --surface:  #1a1525;
+  --border:   #2e2540;
+  --muted:    rgba(250,246,240,0.45);
+  --green:    #5cda8a;
+  --purple:   #c4a8f8;
+  --orange:   #f8c86a;
+  --red:      #f87a7a;
+  --rainbow: linear-gradient(90deg,#ffb8b8,#ffd4a8,#fff0a8,#b8f0c4,#a8e8e8,#a8c8f8,#d0b8f8,#f8b8e8);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR LAYOUT ── */
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 2rem 0;
+  position: sticky; top: 0;
+  height: 100vh; overflow-y: auto;
+  display: flex; flex-direction: column;
+}
+
+.sidebar-logo {
+  font-family: 'Fraunces', serif;
+  font-size: 1.3rem; font-weight: 900;
+  color: var(--cream); letter-spacing: -0.5px;
+  padding: 0 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.4rem;
+  text-decoration: none;
+}
+.sidebar-logo span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--rainbow);
+  display: inline-block;
+  animation: spin-hue 6s linear infinite;
+}
+@keyframes spin-hue {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+.sidebar-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 1.5rem 1.5rem 0.5rem;
+}
+
+.sidebar-link {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.84rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s, background 0.2s;
+  border-left: 2px solid transparent;
+}
+.sidebar-link:hover {
+  color: var(--cream);
+  background: rgba(255,255,255,0.04);
+}
+.sidebar-link.active {
+  color: var(--cream);
+  border-left-color: var(--purple);
+  background: rgba(196,168,248,0.06);
+}
+
+.sidebar-back {
+  margin-top: auto;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.sidebar-back a {
+  font-size: 0.8rem; color: var(--muted);
+  text-decoration: none; display: flex;
+  align-items: center; gap: 0.4rem;
+  transition: color 0.2s;
+}
+.sidebar-back a:hover { color: var(--cream); }
+
+/* ── MAIN CONTENT ── */
+main {
+  padding: 3rem 3.5rem;
+  max-width: 1000px;
+}
+
+.page-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-header h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 2.2rem; font-weight: 900;
+  letter-spacing: -1px; margin-bottom: 0.5rem;
+}
+.page-header p {
+  font-size: 0.9rem; color: var(--muted);
+}
+
+/* ── STATUS GRID ── */
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  margin-bottom: 3rem;
+}
+.status-cell {
+  background: var(--surface);
+  padding: 1.5rem;
+  text-align: center;
+}
+.status-num {
+  font-family: 'Fraunces', serif;
+  font-size: 2rem; font-weight: 900;
+  display: block; line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.status-num.green  { color: var(--green); }
+.status-num.orange { color: var(--orange); }
+.status-num.purple { color: var(--purple); }
+.status-num.red    { color: var(--red); }
+.status-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--muted);
+}
+
+/* ── SECTION TITLES ── */
+.section-h {
+  font-family: 'Fraunces', serif;
+  font-size: 1.2rem; font-weight: 700;
+  margin-bottom: 1.2rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.section-h::before {
+  content: '';
+  width: 18px; height: 3px;
+  background: var(--rainbow);
+  border-radius: 2px; display: block;
+}
+
+/* ── INFRA TABLE ── */
+.infra-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-bottom: 3rem;
+}
+.infra-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+.infra-table td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(46,37,64,0.5);
+  vertical-align: top;
+}
+.infra-table tr:last-child td { border-bottom: none; }
+.infra-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+.infra-table td:first-child {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 1px;
+  text-transform: uppercase; color: var(--muted);
+  white-space: nowrap;
+}
+.infra-table td:nth-child(2) {
+  font-weight: 500; color: var(--cream);
+}
+.infra-table td:nth-child(3) {
+  color: var(--muted); font-size: 0.82rem;
+}
+
+.pill {
+  display: inline-block; padding: 0.2rem 0.6rem;
+  border-radius: 100px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.pill-green  { background: rgba(92,218,138,0.12); color: var(--green); border: 1px solid rgba(92,218,138,0.25); }
+.pill-purple { background: rgba(196,168,248,0.12); color: var(--purple); border: 1px solid rgba(196,168,248,0.25); }
+.pill-orange { background: rgba(248,200,106,0.12); color: var(--orange); border: 1px solid rgba(248,200,106,0.25); }
+.pill-red    { background: rgba(248,122,122,0.12); color: var(--red); border: 1px solid rgba(248,122,122,0.25); }
+
+/* ── CODE BLOCKS ── */
+.code-block {
+  background: #0a0810;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.8;
+  color: rgba(250,246,240,0.7);
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  position: relative;
+}
+.code-block .code-label {
+  position: absolute; top: 0.75rem; right: 1rem;
+  font-size: 0.6rem; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--muted);
+}
+.code-comment { color: rgba(250,246,240,0.25); }
+.code-key     { color: var(--purple); }
+.code-val     { color: var(--green); }
+.code-cmd     { color: var(--orange); }
+
+/* ── ALERT BOXES ── */
+.alert {
+  display: flex; gap: 0.8rem;
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
+  font-size: 0.85rem; line-height: 1.65;
+  margin-bottom: 1.5rem;
+}
+.alert-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+.alert-green  { background: rgba(92,218,138,0.08); border: 1px solid rgba(92,218,138,0.2); }
+.alert-orange { background: rgba(248,200,106,0.08); border: 1px solid rgba(248,200,106,0.2); }
+.alert-purple { background: rgba(196,168,248,0.08); border: 1px solid rgba(196,168,248,0.2); }
+
+/* ── CHECKLIST ── */
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem; }
+.checklist li {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  font-size: 0.88rem; color: rgba(250,246,240,0.75);
+}
+.check-box {
+  width: 18px; height: 18px; border-radius: 4px;
+  border: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+  font-size: 0.7rem;
+}
+.check-box.done { background: rgba(92,218,138,0.15); border-color: var(--green); color: var(--green); }
+.check-box.warn { background: rgba(248,200,106,0.15); border-color: var(--orange); color: var(--orange); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; height: auto; }
+  main { padding: 2rem 1.5rem; }
+  .status-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <a class="sidebar-logo" href="/admin/">
+      <span></span> kök admin
+    </a>
+
+    <p class="sidebar-label">İçerik</p>
+    <a class="sidebar-link" href="/admin/">⊞ Genel Bakış</a>
+    <a class="sidebar-link" href="/admin/#/collections/haberler">📰 Haberler</a>
+    <a class="sidebar-link" href="/admin/#/collections/belgeleme">📋 Belgeleme</a>
+    <a class="sidebar-link" href="/admin/#/collections/kaynaklar">📚 Kaynaklar</a>
+    <a class="sidebar-link" href="/admin/#/collections/etkinlikler">📅 Etkinlikler</a>
+
+    <p class="sidebar-label">Sistem</p>
+    <a class="sidebar-link active" href="/admin/teknik.html">⚙️ Teknik Altyapı</a>
+    <a class="sidebar-link" href="/admin/teknik.html#erisim">🔗 Erişim Noktaları</a>
+    <a class="sidebar-link" href="/admin/teknik.html#guvenhlik">🔐 Güvenlik</a>
+    <a class="sidebar-link" href="/admin/teknik.html#guncelleme">🔄 Güncelleme</a>
+    <a class="sidebar-link" href="/admin/teknik.html#mirror">🪞 Mirror Yönetimi</a>
+
+    <div class="sidebar-back">
+      <a href="/">← Siteye Dön</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+    <div class="page-header">
+      <h1>⚙️ Teknik Altyapı</h1>
+      <p>Sansüre dirençli platform altyapısının durumu ve yönetim rehberi. Bu sayfa yalnızca yöneticilere görünür.</p>
+    </div>
+
+    <!-- STATUS GRID -->
+    <div class="status-grid">
+      <div class="status-cell">
+        <span class="status-num green">5/6</span>
+        <span class="status-label">Aktif Servis</span>
+      </div>
+      <div class="status-cell">
+        <span class="status-num purple">3</span>
+        <span class="status-label">Mirror Sayısı</span>
+      </div>
+      <div class="status-cell">
+        <span class="status-num orange">1</span>
+        <span class="status-label">Beta Katman</span>
+      </div>
+      <div class="status-cell">
+        <span class="status-num green">0</span>
+        <span class="status-label">Aktif İhlal</span>
+      </div>
+    </div>
+
+    <!-- ALTYAPI TABLOSU -->
+    <h2 class="section-h" id="erisim">Erişim Noktaları & Servisler</h2>
+
+    <table class="infra-table">
+      <thead>
+        <tr>
+          <th>Katman</th>
+          <th>Servis / Adres</th>
+          <th>Açıklama</th>
+          <th>Durum</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ana Domain</td>
+          <td>kok.press</td>
+          <td>Cloudflare CDN ile korunan ana domain. HTTPS zorunlu.</td>
+          <td><span class="pill pill-green">Aktif</span></td>
+        </tr>
+        <tr>
+          <td>Mirror 1</td>
+          <td>mirror1.kok.press (DE)</td>
+          <td>Almanya — Hetzner. rsync ile 6 saatte bir güncellenir.</td>
+          <td><span class="pill pill-green">Aktif</span></td>
+        </tr>
+        <tr>
+          <td>Mirror 2</td>
+          <td>mirror2.kok.press (IS)</td>
+          <td>İzlanda — 1984 Hosting. Güçlü gizlilik yasaları.</td>
+          <td><span class="pill pill-green">Aktif</span></td>
+        </tr>
+        <tr>
+          <td>Mirror 3</td>
+          <td>mirror3.kok.press (CH)</td>
+          <td>İsviçre — Uberspace. Bağımsız altyapı.</td>
+          <td><span class="pill pill-green">Aktif</span></td>
+        </tr>
+        <tr>
+          <td>Tor Hidden</td>
+          <td>kokxyz...onion</td>
+          <td>Tor gizli servisi. IP gizleme + trafik şifreleme.</td>
+          <td><span class="pill pill-purple">Tor</span></td>
+        </tr>
+        <tr>
+          <td>IPFS</td>
+          <td>ipfs://Qm... (Fleek)</td>
+          <td>Merkezi olmayan depo. Cloudflare IPFS gateway üzerinden erişilebilir.</td>
+          <td><span class="pill pill-green">Aktif</span></td>
+        </tr>
+        <tr>
+          <td>DNS (HNS)</td>
+          <td>kok/ (Handshake)</td>
+          <td>Sansürlenemez merkezi olmayan domain. Henüz yaygın değil.</td>
+          <td><span class="pill pill-orange">Beta</span></td>
+        </tr>
+        <tr>
+          <td>Mesajlaşma</td>
+          <td>Matrix / Element</td>
+          <td>@kok:matrix.org — E2E şifreli ekip iletişimi.</td>
+          <td><span class="pill pill-green">Aktif</span></td>
+        </tr>
+        <tr>
+          <td>İçerik Yayını</td>
+          <td>Nostr + RSS</td>
+          <td>npub1kok... — Sansürlenemez dağıtım kanalı.</td>
+          <td><span class="pill pill-green">Aktif</span></td>
+        </tr>
+        <tr>
+          <td>I2P</td>
+          <td>kok.i2p (eepsite)</td>
+          <td>Alternatif anonim ağ katmanı. Kurulum devam ediyor.</td>
+          <td><span class="pill pill-orange">Beta</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- GÜVENLİK -->
+    <h2 class="section-h" id="guvenhlik">Güvenlik Kontrol Listesi</h2>
+
+    <ul class="checklist">
+      <li>
+        <span class="check-box done">✓</span>
+        <span><strong>HTTPS / HSTS</strong> — Tüm domainlerde zorunlu, preload listesinde.</span>
+      </li>
+      <li>
+        <span class="check-box done">✓</span>
+        <span><strong>CSP Başlıkları</strong> — Content-Security-Policy tanımlı, XSS koruması aktif.</span>
+      </li>
+      <li>
+        <span class="check-box done">✓</span>
+        <span><strong>Sıfır Log Politikası</strong> — Sunucularda access log kapalı, IP kaydedilmiyor.</span>
+      </li>
+      <li>
+        <span class="check-box done">✓</span>
+        <span><strong>Şifreli Yedek</strong> — İçerik GPG ile şifreli olarak harici diske yedekleniyor.</span>
+      </li>
+      <li>
+        <span class="check-box done">✓</span>
+        <span><strong>Açık Kaynak</strong> — Kaynak kodu Codeberg ve GitHub'da kamuya açık.</span>
+      </li>
+      <li>
+        <span class="check-box warn">!</span>
+        <span><strong>2FA</strong> — Tüm admin hesaplarında 2FA zorunlu. Yeni eklenenlerde kontrol et.</span>
+      </li>
+      <li>
+        <span class="check-box warn">!</span>
+        <span><strong>PGP Anahtar Rotasyonu</strong> — Anahtarlar 12 ayda bir yenilenecek. Son yenileme: Mart 2024.</span>
+      </li>
+      <li>
+        <span class="check-box done">✓</span>
+        <span><strong>robots.txt</strong> — <code>/admin/</code> dizini arama motorlarından gizli.</span>
+      </li>
+    </ul>
+
+    <div class="alert alert-orange">
+      <span class="alert-icon">⚠️</span>
+      <span>Admin paneline yalnızca Tor Browser veya VPN üzerinden erişilmesi önerilir. Kimliğini korumak için normal tarayıcıdan giriş yapmaktan kaçın.</span>
+    </div>
+
+    <!-- MİRROR YÖNETİMİ -->
+    <h2 class="section-h" id="mirror">Mirror Güncelleme</h2>
+
+    <p style="font-size:0.88rem; color:var(--muted); margin-bottom:1.2rem;">Netlify'da bir güncelleme yapıldığında mirror'lar otomatik rsync ile 6 saatte bir güncellenir. Manuel güncelleme için:</p>
+
+    <div class="code-block">
+      <span class="code-label">bash</span>
+      <span class="code-comment"># Tüm mirror'ları güncelle</span><br>
+      <span class="code-cmd">rsync</span> -avz --delete <span class="code-val">site/</span> <span class="code-key">kullanici</span>@mirror1.kok.press:/var/www/kok/<br>
+      <span class="code-cmd">rsync</span> -avz --delete <span class="code-val">site/</span> <span class="code-key">kullanici</span>@mirror2.kok.press:/var/www/kok/<br>
+      <span class="code-cmd">rsync</span> -avz --delete <span class="code-val">site/</span> <span class="code-key">kullanici</span>@mirror3.kok.press:/var/www/kok/<br>
+      <br>
+      <span class="code-comment"># IPFS güncelle (Fleek otomatik yapar, manuel için:)</span><br>
+      <span class="code-cmd">ipfs-deploy</span> site/ -d cloudflare
+    </div>
+
+    <!-- GÜNCELLEME -->
+    <h2 class="section-h" id="guncelleme">Tor Servis Yönetimi</h2>
+
+    <div class="alert alert-purple">
+      <span class="alert-icon">🧅</span>
+      <span>Tor gizli servis adresini değiştirmek kimliğini sıfırlar. <code>hostname</code> dosyasını yedekle ve asla kaybetme.</span>
+    </div>
+
+    <div class="code-block">
+      <span class="code-label">torrc</span>
+      <span class="code-comment"># /etc/tor/torrc içinde:</span><br>
+      <span class="code-key">HiddenServiceDir</span> <span class="code-val">/var/lib/tor/kok_onion/</span><br>
+      <span class="code-key">HiddenServicePort</span> <span class="code-val">80 127.0.0.1:80</span><br>
+      <br>
+      <span class="code-comment"># Servisi yeniden başlat ve adresi öğren:</span><br>
+      <span class="code-cmd">sudo systemctl restart tor</span><br>
+      <span class="code-cmd">cat</span> /var/lib/tor/kok_onion/<span class="code-val">hostname</span>
+    </div>
+
+    <div class="alert alert-green">
+      <span class="alert-icon">✅</span>
+      <span>Bu sayfadaki bilgileri güvenli Matrix kanalında da paylaşabilirsin. E-posta ile kesinlikle iletişim kurma.</span>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>
