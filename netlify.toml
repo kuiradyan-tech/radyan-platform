@@ -4,8 +4,8 @@
 # ─────────────────────────────────────────────────────────────
 
 [build]
-  publish = "static"      # Hugo/Jekyll build klasörü; statik site ise "site" olarak değiştir
-  command = "echo 'Static site — no build step'"
+  publish = "."      # Hugo/Jekyll build klasörü; statik site ise "site" olarak değiştir
+  command = ""
 
 # Decap CMS için kimlik doğrulama
 [build.environment]
